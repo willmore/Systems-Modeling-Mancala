@@ -47298,3 +47298,7 @@ c3;;i:tbmSs#3851;information;v::1;-;v:java.lang.String:orientation;i:tbmSs#6841;
 c3;;i:tbmSs#3851;information;v::0.03546099290780142;-;v:java.lang.String:alignment;i:tbmSs#6841;
 t;tbmSs#4851;drag;1289228454751;-;;
 c3;;i:ztAbS#AEC;information;v::0;v::61;v:java.lang.String:location_X;i:tbmSs#4851;
+c5;4;-;-;v:java.lang.Long:3900;-;v::IDSUFFIX;-;
+t;gWZ_B#8DE;drag;1289229418117;-;;
+c3;;i:SSiEd#9AD;information;v::320;v::333;v:java.lang.String:location_X;i:gWZ_B#8DE;
+c3;;i:SSiEd#9AD;information;v::82;v::50;v:java.lang.String:location_Y;i:gWZ_B#8DE;
