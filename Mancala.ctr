@@ -31183,3 +31183,7 @@ c3;;i:ztAbS#86E;revEntry;i:ztAbS#56E;-;-;i:ztAbS#46E;
 c3;;i:ztAbS#7EC;elements;i:ztAbS#86E;-;-;i:ztAbS#46E;
 c3;;i:ztAbS#86E;diagrams;i:ztAbS#7EC;-;v:java.lang.Integer:0;i:ztAbS#46E;
 >>>>>>> origin/master
+c5;4;-;-;v:java.lang.Long:3900;-;v::IDSUFFIX;-;
+t;gWZ_B#8DE;drag;1289229418117;-;;
+c3;;i:SSiEd#9AD;information;v::320;v::333;v:java.lang.String:location_X;i:gWZ_B#8DE;
+c3;;i:SSiEd#9AD;information;v::82;v::50;v:java.lang.String:location_Y;i:gWZ_B#8DE;
