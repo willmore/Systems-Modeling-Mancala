@@ -60,6 +60,7 @@ public class GameBoard extends JPanel {
 		c.gridheight = 2;
 		
 		this.leftStore = new JLabel();
+		this.leftStore.setPreferredSize(new Dimension(STORE_WIDTH, STORE_HEIGHT));
 		this.leftStore.setText("JLabel");
 		this.leftStore.setName("resultLabel");
 		this.add(leftStore, c);
@@ -67,6 +68,7 @@ public class GameBoard extends JPanel {
 		c.gridx = 7;
 		this.rightStore = new JLabel();
 		this.rightStore.setText("JLabel");
+		this.rightStore.setPreferredSize(new Dimension(STORE_WIDTH, STORE_HEIGHT));
 		this.rightStore.setName("resultLabel");
 		this.add(rightStore, c);
 		
@@ -101,16 +103,13 @@ public class GameBoard extends JPanel {
 			houseButton.setPreferredSize(new Dimension(HOUSE_WIDTH, HOUSE_HEIGHT));
 		
 			return houseButton;
-	}
-
-
-	
+	}	
 	
 	private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("GridBagLayoutDemo");
         
-		frame.add(new GameBoard());
+		frame.add(new GameBoard());	
 
         //Display the window.
         frame.pack();

@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
-import ee.ut.mancala.view.MainApplication;
+import ee.ut.mancala.controller.GameController;
+import ee.ut.mancala.view.MainGui;
 
 public class Main {
 
@@ -14,6 +15,8 @@ public class Main {
 	 * Launches this application
 	 */
 	public static void main(String[] args) {
+		System.out.println("Starting program");
+		/*
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				MainApplication application = new MainApplication();
@@ -29,6 +32,8 @@ public class Main {
 				});
 			}
 		});
+		*/
+		new GameController().start();
 	}
 
 }
