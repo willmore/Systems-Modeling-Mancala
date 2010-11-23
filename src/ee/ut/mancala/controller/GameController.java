@@ -24,8 +24,8 @@ public class GameController {
 
 				// TODO this is a hardcoded game initialization, must implement
 				// as story.
-				Player p1 = new Player();
-				Player p2 = new Player();
+				Player p1 = new Player("Alice");
+				Player p2 = new Player("Bob");
 
 				Houses h1 = new Houses();
 				p1.setHouses(h1);
