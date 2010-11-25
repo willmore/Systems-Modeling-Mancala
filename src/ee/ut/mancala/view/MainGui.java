@@ -3,6 +3,8 @@ package ee.ut.mancala.view;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
 import javax.swing.SwingConstants;
 import java.awt.Point;
 import javax.swing.JLabel;
@@ -21,29 +23,47 @@ public class MainGui {
 	private JMenuBar jJMenuBar = null;
 	private JMenu fileMenu = null;
 	private JMenu helpMenu = null;
+	private JMenu showHistoryMenu = null;
 	private JMenuItem exitMenuItem = null;
 	private JMenuItem aboutMenuItem = null;
+	private JMenuItem showHistoryMenuItem = null;
 	private JDialog aboutDialog = null;
 	private JPanel aboutContentPane = null;
 	private JLabel aboutVersionLabel = null;
 	private PlayerEntry playerEntry = null;
-	
+	private ShowHistory showHistory = null;
 	private GameBoard gameBoard;
-	
 	
 	public MainGui() {
 		this.gameBoard = new GameBoard();
+		this.gameBoard.setName("GameBoard");
+		this.showHistory= new ShowHistory();
+		this.showHistory.setName("History");
 		this.playerEntry = new PlayerEntry();
-		this.getJContentPane().add(playerEntry);
-		
-		
-		
+		this.playerEntry.setName("PlayerEntry");
+		this.getJContentPane().add(playerEntry,playerEntry.getName());
+		this.getJContentPane().add(showHistory,showHistory.getName());
+		this.getJContentPane().add(gameBoard,gameBoard.getName());
+		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		c.show(this.getJContentPane(),playerEntry.getName());
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	public GameBoard getGameBoard() {
 		return this.gameBoard;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 */
+	public ShowHistory getShowHistory() {
+		return this.showHistory;
+	}
+
 	/**
 	 * This method initializes jFrame
 	 * 
@@ -69,30 +89,32 @@ public class MainGui {
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
 			jContentPane = new JPanel();
-			jContentPane.setLayout(new BorderLayout());
+			//jContentPane.setLayout(new BorderLayout());
+			jContentPane.setLayout(new CardLayout());
 			jContentPane.setPreferredSize(new Dimension(25, 25));
 		}
 		return jContentPane;
 	}
 
 	/**
-	 * This method initializes jJMenuBar	
-	 * 	
-	 * @return javax.swing.JMenuBar	
+	 * This method initializes jJMenuBar
+	 * 
+	 * @return javax.swing.JMenuBar
 	 */
 	private JMenuBar getJJMenuBar() {
 		if (jJMenuBar == null) {
 			jJMenuBar = new JMenuBar();
 			jJMenuBar.add(getFileMenu());
 			jJMenuBar.add(getHelpMenu());
+			jJMenuBar.add(getShowHistoryMenu());
 		}
 		return jJMenuBar;
 	}
 
 	/**
-	 * This method initializes jMenu	
-	 * 	
-	 * @return javax.swing.JMenu	
+	 * This method initializes jMenu
+	 * 
+	 * @return javax.swing.JMenu
 	 */
 	private JMenu getFileMenu() {
 		if (fileMenu == null) {
@@ -104,9 +126,9 @@ public class MainGui {
 	}
 
 	/**
-	 * This method initializes jMenu	
-	 * 	
-	 * @return javax.swing.JMenu	
+	 * This method initializes jMenu
+	 * 
+	 * @return javax.swing.JMenu
 	 */
 	private JMenu getHelpMenu() {
 		if (helpMenu == null) {
@@ -118,9 +140,22 @@ public class MainGui {
 	}
 
 	/**
-	 * This method initializes jMenuItem	
-	 * 	
-	 * @return javax.swing.JMenuItem	
+	 * 
+	 * @return
+	 */
+	private JMenu getShowHistoryMenu() {
+		if (showHistoryMenu == null) {
+			showHistoryMenu = new JMenu();
+			showHistoryMenu.setText("History");
+			showHistoryMenu.add(getShowHistoryMenuItem());
+		}
+		return showHistoryMenu;
+	}
+
+	/**
+	 * This method initializes jMenuItem
+	 * 
+	 * @return javax.swing.JMenuItem
 	 */
 	private JMenuItem getExitMenuItem() {
 		if (exitMenuItem == null) {
@@ -136,9 +171,9 @@ public class MainGui {
 	}
 
 	/**
-	 * This method initializes jMenuItem	
-	 * 	
-	 * @return javax.swing.JMenuItem	
+	 * This method initializes jMenuItem
+	 * 
+	 * @return javax.swing.JMenuItem
 	 */
 	private JMenuItem getAboutMenuItem() {
 		if (aboutMenuItem == null) {
@@ -158,9 +193,17 @@ public class MainGui {
 		return aboutMenuItem;
 	}
 
+	public JMenuItem getShowHistoryMenuItem() {
+		if (showHistoryMenuItem == null) {
+			showHistoryMenuItem = new JMenuItem();
+			showHistoryMenuItem.setText("Show Previous Games");
+		}
+		return showHistoryMenuItem;
+	}
+
 	/**
-	 * This method initializes aboutDialog	
-	 * 	
+	 * This method initializes aboutDialog
+	 * 
 	 * @return javax.swing.JDialog
 	 */
 	private JDialog getAboutDialog() {
@@ -187,9 +230,9 @@ public class MainGui {
 	}
 
 	/**
-	 * This method initializes aboutVersionLabel	
-	 * 	
-	 * @return javax.swing.JLabel	
+	 * This method initializes aboutVersionLabel
+	 * 
+	 * @return javax.swing.JLabel
 	 */
 	private JLabel getAboutVersionLabel() {
 		if (aboutVersionLabel == null) {
@@ -205,11 +248,31 @@ public class MainGui {
 	}
 
 	public void hidePlayerEntry() {
-		getJContentPane().remove(playerEntry);
+		//getJContentPane().remove(playerEntry);
+		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		
+	}
+	
+	public void showGameBoard() {
+		//getJContentPane().add(gameBoard);
+		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		c.show(this.getJContentPane(), gameBoard.getName());
+	}
+	
+	public void showPlayerEntry() {
+		//getJContentPane().add(gameBoard);
+		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		c.show(this.getJContentPane(), playerEntry.getName());
 	}
 
-	public void showGameBoard() {
-		getJContentPane().add(gameBoard);
+	public void showHistory() {
+		//getJContentPane().add(showHistory);
+		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		c.show(this.getJContentPane(),showHistory.getName());
+	}
+
+	public void hideHistory() {
+		getJContentPane().remove(showHistory);
 	}
 
 	public void refresh() {
@@ -220,7 +283,5 @@ public class MainGui {
 		System.out.println("Getting Player Entry");
 		return this.playerEntry;
 	}
-	
-	
 
 }

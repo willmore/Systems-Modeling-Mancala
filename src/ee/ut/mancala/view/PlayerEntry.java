@@ -19,10 +19,22 @@ public class PlayerEntry extends JPanel {
 	private JTextField player1Name = null;
 	private JTextField player2Name = null;
 
+	public String getPlayerOneName() {
+		if (player1Name != null)
+			return player1Name.getText();
+		return "";
+	}
+
+	public String getPlayerTwoName() {
+		if (player2Name != null)
+			return player2Name.getText();
+		return "";
+	}
+
 	public JButton getSubmitButton() {
 		return submit;
 	}
-	
+
 	/**
 	 * This is the default constructor
 	 */
@@ -36,48 +48,48 @@ public class PlayerEntry extends JPanel {
 	 * 
 	 * @return void
 	 */
-	private void initialize() {		
-		
+	private void initialize() {
+
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 2;
 		this.setPreferredSize(new Dimension(100, 100));
 		this.setLayout(new GridBagLayout());
 		this.add(getSubmit(), gridBagConstraints);
-		
+
 		GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 		gridBagConstraints1.gridx = 0;
 		gridBagConstraints1.gridy = 0;
-		
+
 		JLabel textPane = new JLabel();
-		
+
 		textPane.setText("Player 1");
 		gridBagConstraints1.gridy = 0;
 		this.add(textPane, gridBagConstraints1);
-		
+
 		this.player1Name = new JTextField();
 		this.player1Name.setPreferredSize(new Dimension(90, 20));
 		gridBagConstraints1.gridy = 1;
 		this.add(this.player1Name, gridBagConstraints1);
-		
+
 		this.player2Name = new JTextField();
 		this.player2Name.setPreferredSize(new Dimension(90, 20));
-		
+
 		gridBagConstraints1.gridx = 2;
 		gridBagConstraints1.gridy = 0;
-		
+
 		textPane = new JLabel();
 		textPane.setText("Player 2");
 		this.add(textPane, gridBagConstraints1);
 		gridBagConstraints1.gridy = 1;
 		this.add(this.player2Name, gridBagConstraints1);
-		
+
 	}
 
 	/**
-	 * This method initializes submit	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes submit
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getSubmit() {
 		if (submit == null) {
@@ -88,30 +100,26 @@ public class PlayerEntry extends JPanel {
 		return submit;
 	}
 
-	
 	private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("Demo");
-        frame.setSize(new Dimension(500, 500));
-        
-		frame.add(new PlayerEntry());	
+		// Create and set up the window.
+		JFrame frame = new JFrame("Demo");
+		frame.setSize(new Dimension(500, 500));
 
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
+		frame.add(new PlayerEntry());
 
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
-	
+		// Display the window.
+		frame.pack();
+		frame.setVisible(true);
+	}
 
-	
+	public static void main(String[] args) {
+		// Schedule a job for the event-dispatching thread:
+		// creating and showing this application's GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				createAndShowGUI();
+			}
+		});
+	}
 
 }

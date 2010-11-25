@@ -19,12 +19,15 @@ public class GameBoard extends JPanel {
 	
 	private static int BOARD_HOUSE_HEIGHT = 2;
 	private static int BOARD_HOUSE_WIDTH = 6;
-	
+	private static int X = 0;
+	private static int Y = 1;
 	
 	private final JButton[][] houseButtons = new JButton[BOARD_HOUSE_WIDTH][BOARD_HOUSE_HEIGHT];
 	
 	private JLabel leftStore;
 	private JLabel rightStore;
+	private JLabel playerNameOne;
+	private JLabel playerNameTwo;
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -51,7 +54,10 @@ public class GameBoard extends JPanel {
 	}
 
 
-	
+	private void initializePlayerNames()
+	{
+		
+	}
 	
 	private void initializeStores() {
 		GridBagConstraints c = new GridBagConstraints();
@@ -95,6 +101,31 @@ public class GameBoard extends JPanel {
 	
 	public JButton getHouseButton(int x, int y) {
 		return houseButtons[x][y];
+	}
+	
+	public int[] getHousePosition(Object ohouse)
+	{
+		JButton house = (JButton)ohouse; 
+		int[] pos= new int[2];		
+		for (int x = 0; x< BOARD_HOUSE_WIDTH; x++)
+		{
+			for (int y=0; y <BOARD_HOUSE_HEIGHT; y++)
+			{
+				if (houseButtons[x][y].equals(house))
+				{
+					pos[X]= x; 
+					pos[Y]= y;
+					break;
+				}
+			}
+		}
+		return pos;
+	}
+	
+	public void setHouseSeeds(int x, int y, String value)
+	{
+		JButton house = getHouseButton(x, y);
+		house.setText(value);		
 	}
 	
 	private JButton createHouseButton() {
