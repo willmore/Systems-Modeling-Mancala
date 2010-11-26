@@ -141,7 +141,7 @@ public class GameBoard extends JPanel {
 		return houseButton;
 	}
 
-	public int getBoardHeigh() {
+	public int getBoardHeight() {
 		return BOARD_HOUSE_HEIGHT;
 	}
 

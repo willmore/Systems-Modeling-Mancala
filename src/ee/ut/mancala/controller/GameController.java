@@ -36,7 +36,7 @@ public class GameController {
 				// Adding listeners to the buttons
 				for (int x = 0; x < application.getGameBoard().getBoardWidth(); x++) {
 					for (int y = 0; y < application.getGameBoard()
-							.getBoardHeigh(); y++) {
+							.getBoardHeight(); y++) {
 
 						System.out.println("wiring " + x + ":" + y);
 						application.getGameBoard().getHouseButton(x, y)
