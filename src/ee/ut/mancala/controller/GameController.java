@@ -24,13 +24,15 @@ public class GameController {
 
 	private static int X = 0;
 	private static int Y = 1;
-
+	
+	
 	public void start() {
-
+				
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				final MainGui application = new MainGui();
-
+				final Game game = new Game("","");
 				// Adding listeners to the buttons
 				for (int x = 0; x < application.getGameBoard().getBoardWidth(); x++) {
 					for (int y = 0; y < application.getGameBoard()
@@ -45,8 +47,7 @@ public class GameController {
 										int[] pos = application.getGameBoard()
 												.getHousePosition(
 														arg0.getSource());
-										Player player = (Player) Game
-												.getInstance().getPlayer()
+										Player player = (Player) game.getPlayer()
 												.toArray()[pos[Y]];
 										if (pos[Y] == 0)
 											pos[X] = Math.abs(pos[X] - 5);
@@ -61,7 +62,7 @@ public class GameController {
 				}
 
 				// initializing model
-				Game.getInstance().initializeGame("", "");
+				
 				// TODO this is a hardcoded game initialization, must implement
 				// as story.
 				/*
@@ -79,7 +80,7 @@ public class GameController {
 
 				// Wire house properties
 				int y = 0;
-				for (Player p : Game.getInstance().getPlayer()) {
+				for (Player p : game.getPlayer()) {
 					System.out.println("New player "
 							+ p.getHouses().getHouse().size());
 					int x = 0;
@@ -93,28 +94,31 @@ public class GameController {
 								@Override
 								public void propertyChange(
 										PropertyChangeEvent arg0) {
-									System.out
-											.println("store change with the value "
-													+ String.valueOf(arg0
-															.getNewValue()));
-
-									Store store = (Store) arg0.getSource();
-									Player player = store.getPlayer();
-									ArrayList<Player> players = new ArrayList<Player>(
-											Game.getInstance().getPlayer());
-									int y = players.indexOf(player);
-									if (y >= 0) {
-										application
-												.getGameBoard()
-												.setStoreSeeds(
-														y,
-														String.valueOf(arg0
+									if (arg0.getSource().getClass()
+											.equals(Store.class)) {
+										System.out
+												.println("store change with the value "
+														+ String.valueOf(arg0
 																.getNewValue()));
+
+										Store store = (Store) arg0.getSource();
+										Player player = store.getPlayer();
+										ArrayList<Player> players = new ArrayList<Player>(
+												game.getPlayer());
+										int y = players.indexOf(player);
+										if (y >= 0) {
+											application
+													.getGameBoard()
+													.setStoreSeeds(
+															y,
+															String.valueOf(arg0
+																	.getNewValue()));
+										}
 									}
 								}
 							});
 
-					//wire houses
+					// wire houses
 					for (House h : p.getHouses().getHouse()) {
 						h.addPropertyChangeListener(
 								SeedContainer.PROPERTY_SEED_COUNT,
@@ -123,32 +127,35 @@ public class GameController {
 									@Override
 									public void propertyChange(
 											PropertyChangeEvent arg0) {
-										System.out
-												.println("seed change with the value "
-														+ String.valueOf(arg0
-																.getNewValue()));
+										if (arg0.getSource().getClass()
+												.equals(House.class)) {
+											System.out.println("seed change with the value "
+													+ String.valueOf(arg0
+															.getNewValue()));
 
-										House house = (House) arg0.getSource();
+											House house = (House) arg0
+													.getSource();
 
-										int x = house.getHouses().getHouse()
-												.indexOf(house);
+											int x = house.getHouses()
+													.getHouse().indexOf(house);
 
-										Player player = house.getHouses()
-												.getOwner();
+											Player player = house.getHouses()
+													.getOwner();
 
-										ArrayList<Player> players = new ArrayList<Player>(
-												Game.getInstance().getPlayer());
-										int y = players.indexOf(player);
-										if (y >= 0) {
-											if (y == 0)
-												x = Math.abs(x - 5);
-											application
-													.getGameBoard()
-													.setHouseSeeds(
-															x,
-															y,
-															String.valueOf(arg0
-																	.getNewValue()));
+											ArrayList<Player> players = new ArrayList<Player>(
+													game.getPlayer());
+											int y = players.indexOf(player);
+											if (y >= 0) {
+												if (y == 0)
+													x = Math.abs(x - 5);
+												application
+														.getGameBoard()
+														.setHouseSeeds(
+																x,
+																y,
+																String.valueOf(arg0
+																		.getNewValue()));
+											}
 										}
 									}
 								});
@@ -192,7 +199,7 @@ public class GameController {
 								// Get player names
 								// Start new game
 								ArrayList<Player> players = new ArrayList<Player>(
-										Game.getInstance().getPlayer());
+										game.getPlayer());
 								players.get(0).setName(
 										playerEntry.getPlayerOneName());
 								players.get(1).setName(
@@ -211,8 +218,8 @@ public class GameController {
 								// application.hidePlayerEntry();
 								// hide previous one
 								boolean existingGames = false;
-								if (Game.getInstance().getHistory() != null) {
-									GameRecord record = Game.getInstance()
+								if (game.getHistory() != null) {
+									GameRecord record = game
 											.getHistory().getMostRecent();
 									if (record != null) {
 										ShowHistory showHistory = application
