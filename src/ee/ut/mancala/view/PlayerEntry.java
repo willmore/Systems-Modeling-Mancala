@@ -19,18 +19,30 @@ public class PlayerEntry extends JPanel {
 	private JTextField player1Name = null;
 	private JTextField player2Name = null;
 
+	/**
+	 * returns the name of the player one. The value is given by the user 
+	 * @return
+	 */
 	public String getPlayerOneName() {
 		if (player1Name != null)
 			return player1Name.getText();
 		return "";
 	}
 
+	/**
+	 * returns the name of the player two. The value is given by the user
+	 * @return
+	 */
 	public String getPlayerTwoName() {
 		if (player2Name != null)
 			return player2Name.getText();
 		return "";
 	}
 
+	/**
+	 * Returns the submit button
+	 * @return
+	 */
 	public JButton getSubmitButton() {
 		return submit;
 	}

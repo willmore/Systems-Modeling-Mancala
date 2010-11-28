@@ -66,8 +66,11 @@ public class GameBoard extends JPanel {
 		this.initializeTurnLights();
 	}
 
+	/**
+	 * Updates the GUI to show which player owns the turn
+	 * @param player - The Index of the player. Domain: 0|1
+	 */
 	public void switchTurn(int player) {
-		//it can be optimized
 		if (player == 0) {
 			turnPlayerOne.setForeground(turnOn);
 			turnPlayerOne.setText(turnOnText);
@@ -81,6 +84,9 @@ public class GameBoard extends JPanel {
 		}
 	}
 
+	/**
+	 * This method initialize the turn sign
+	 */
 	private void initializeTurnLights() {
 		
 		turnPlayerOne = new JLabel("");
@@ -94,6 +100,9 @@ public class GameBoard extends JPanel {
 		this.add(turnPlayerTwo,c);
 	}
 
+	/**
+	 * This method initialize the player labels
+	 */
 	private void initializePlayerNames() {
 		playerNameOne = new JLabel("");
 		playerNameTwo = new JLabel("");
@@ -106,6 +115,9 @@ public class GameBoard extends JPanel {
 		this.add(playerNameTwo,c);		
 	}
 
+	/**
+	 * This method initializes the Stores
+	 */
 	private void initializeStores() {
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 1;
@@ -128,7 +140,9 @@ public class GameBoard extends JPanel {
 		this.add(rightStore, c);
 
 	}
-
+	/**
+	 * This method initialize the buttons that represents the houses in the GUI
+	 */
 	private void initializeHouseButtons() {
 
 		final int baseX = 2;
@@ -148,10 +162,21 @@ public class GameBoard extends JPanel {
 		}
 	}
 
+	/**
+	 * Return the button in the location x,y where y = row (0|1) and x = column (0..6)
+	 * @param x - column
+	 * @param y - row
+	 * @return
+	 */
 	public JButton getHouseButton(int x, int y) {
 		return houseButtons[x][y];
 	}
 
+	/**
+	 * return the position of the given house ohouse
+	 * @param ohouse - house whose location is returned. 
+	 * @return
+	 */
 	public int[] getHousePosition(Object ohouse) {
 		JButton house = (JButton) ohouse;
 		int[] pos = new int[2];
@@ -167,6 +192,11 @@ public class GameBoard extends JPanel {
 		return pos;
 	}
 
+	/**
+	 * Set the number of seeds shown in the store
+	 * @param player - The owner of the house
+	 * @param value - The number to be shown
+	 */
 	public void setStoreSeeds(int player, String value) {
 		if (player == 0)
 			leftStore.setText(value);
@@ -174,11 +204,22 @@ public class GameBoard extends JPanel {
 			rightStore.setText(value);
 	}
 
+	/**
+	 * Set the number of seeds shown in the houses
+	 * @param x - column where the house is located
+	 * @param y - row where the house is located
+	 * @param value - value to be shown
+	 */
 	public void setHouseSeeds(int x, int y, String value) {
 		JButton house = getHouseButton(x, y);
 		house.setText(value);
 	}
 
+	/**
+	 * Set the name of the player in the given index
+	 * @param player - number of player. Domain = 0|1
+	 * @param name - new name to be set
+	 */
 	public void setPlayerName(int player, String name)
 	{
 		if (player == 0)
@@ -187,6 +228,10 @@ public class GameBoard extends JPanel {
 			playerNameTwo.setText(name);
 	}
 	
+	/**
+	 * Returns a new House Button
+	 * @return
+	 */
 	private JButton createHouseButton() {
 
 		JButton houseButton = new JButton();
@@ -196,14 +241,25 @@ public class GameBoard extends JPanel {
 		return houseButton;
 	}
 
+	/**
+	 * Returns the height of the board
+	 * @return
+	 */
 	public int getBoardHeight() {
 		return BOARD_HOUSE_HEIGHT;
 	}
 
+	/**
+	 * Return the width of the board
+	 * @return
+	 */
 	public int getBoardWidth() {
 		return BOARD_HOUSE_WIDTH;
 	}
 
+	/**
+	 * Initialize the main window and shows it
+	 */
 	private static void createAndShowGUI() {
 		// Create and set up the window.
 		JFrame frame = new JFrame("GridBagLayoutDemo");
@@ -215,6 +271,10 @@ public class GameBoard extends JPanel {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// Schedule a job for the event-dispatching thread:
 		// creating and showing this application's GUI.

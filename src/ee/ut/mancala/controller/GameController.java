@@ -26,14 +26,23 @@ public class GameController {
 
 	private static int X = 0;
 	private static int Y = 1;
-
+	
+	/**
+	 * Starts the thread
+	 */
 	public void start() {
 
 		SwingUtilities.invokeLater(new Runnable() {
+			/**
+			 * Code to be run once the thead is started
+			 */
 			public void run() {
+				//View instance
 				final MainGui application = new MainGui();
+				//Model instance
 				final Game game = new Game("", "");
 
+				//wiring the Turn 
 				game.getTurn().addPropertyChangeListener(Turn.PROPERTY_IS,
 						new PropertyChangeListener() {
 
@@ -71,7 +80,7 @@ public class GameController {
 							}
 						});
 
-				// Adding listeners to the buttons
+				// wiring  buttons (house buttons)
 				for (int x = 0; x < application.getGameBoard().getBoardWidth(); x++) {
 					for (int y = 0; y < application.getGameBoard()
 							.getBoardHeight(); y++) {
@@ -98,23 +107,6 @@ public class GameController {
 								});
 					}
 				}
-
-				// initializing model
-
-				// TODO this is a hardcoded game initialization, must implement
-				// as story.
-				/*
-				 * Player p1 = new Player("Alice"); Player p2 = new
-				 * Player("Bob");
-				 * 
-				 * Houses h1 = new Houses(); p1.setHouses(h1); for (int i = 0; i
-				 * < 6; i++) { h1.addToHouse(new House()); }
-				 * 
-				 * Houses h2 = new Houses(); p2.setHouses(h2); for (int i = 0; i
-				 * < 6; i++) { h2.addToHouse(new House()); }
-				 * Game.getInstance().addToPlayer(p1);
-				 * Game.getInstance().addToPlayer(p2);
-				 */
 
 				// Wire house properties
 				int y = 0;
@@ -213,28 +205,6 @@ public class GameController {
 										}
 									}
 								});
-
-						// System.out.println("wiring " + x + ":" + y);
-						// application.getGameBoard().getHouseButton(x, y)
-						// .addActionListener(new ActionListener() {
-						//
-						// @Override
-						// public void actionPerformed(ActionEvent arg0) {
-						//
-						// int[] pos = application.getGameBoard()
-						// .getHousePosition(
-						// arg0.getSource());
-						// Player player = (Player) Game
-						// .getInstance().getPlayer()
-						// .toArray()[pos[Y]];
-						// House house = player.getHouses()
-						// .getFromHouse(pos[X]);
-						// player.play(house);
-						// System.out.println("hit cell " + pos[X]
-						// + ":" + pos[Y]);
-						// }
-						// });
-
 						x++;
 					}
 					y++;
@@ -245,11 +215,8 @@ public class GameController {
 						.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
-								// application.hidePlayerEntry();
 								PlayerEntry playerEntry = application
 										.getPlayerEntry();
-								// Get player names
-								// Start new game
 								ArrayList<Player> players = new ArrayList<Player>(
 										game.getPlayer());
 								players.get(0).setName(
@@ -262,14 +229,12 @@ public class GameController {
 							}
 						});
 
-				// show history
+				// wire show history
 				application.getShowHistoryMenuItem().addActionListener(
 						new ActionListener() {
 
 							@Override
-							public void actionPerformed(ActionEvent arg0) {
-								// application.hidePlayerEntry();
-								// hide previous one
+							public void actionPerformed(ActionEvent arg0) {						
 								boolean existingGames = false;
 								if (game.getHistory() != null) {
 									GameRecord record = game.getHistory()
@@ -298,15 +263,11 @@ public class GameController {
 							}
 						});
 
-				// wire close button in Show History
+				// wire close button in show history
 				application.getShowHistory().getCloseButton()
 						.addActionListener(new ActionListener() {
-
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
-								// hide show history
-
-								// show previous
 								application.showGameBoard();
 							}
 						});
