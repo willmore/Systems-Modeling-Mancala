@@ -1,13 +1,17 @@
 package ee.ut.mancala.view;
 
+import java.awt.Color;
+
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class GameOver extends JPanel {
 
 	private JButton close;
-	private JTextArea display;
+	private JButton playAgain;
+	private JLabel display;
 	
 	/**
 	 * Default constructor
@@ -24,9 +28,12 @@ public class GameOver extends JPanel {
 	private void initialize()
 	{
 		close = new JButton("Close");
-		display = new JTextArea();
+		playAgain = new JButton("Play Again");
+		display = new JLabel();
+		display.setForeground(Color.GREEN);
 		this.add(close);
 		this.add(display);
+		this.add(playAgain);
 	}
 	
 	/**
@@ -36,5 +43,15 @@ public class GameOver extends JPanel {
 	public void addText(String text)
 	{
 		display.setText(display.getText()+"\n"+text);		
+	}
+	
+	public JButton getClose()
+	{
+		return close;
+	}
+	
+	public JButton getPlayAgain()
+	{
+		return playAgain;
 	}
 }

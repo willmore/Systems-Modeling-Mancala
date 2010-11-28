@@ -26,7 +26,7 @@ public class GameController {
 
 	private static int X = 0;
 	private static int Y = 1;
-	
+
 	/**
 	 * Starts the thread
 	 */
@@ -37,12 +37,12 @@ public class GameController {
 			 * Code to be run once the thead is started
 			 */
 			public void run() {
-				//View instance
+				// View instance
 				final MainGui application = new MainGui();
-				//Model instance
+				// Model instance
 				final Game game = new Game("", "");
 
-				//wiring the Turn 
+				// wiring the Turn
 				game.getTurn().addPropertyChangeListener(Turn.PROPERTY_IS,
 						new PropertyChangeListener() {
 
@@ -80,7 +80,7 @@ public class GameController {
 							}
 						});
 
-				// wiring  buttons (house buttons)
+				// wiring buttons (house buttons)
 				for (int x = 0; x < application.getGameBoard().getBoardWidth(); x++) {
 					for (int y = 0; y < application.getGameBoard()
 							.getBoardHeight(); y++) {
@@ -100,7 +100,7 @@ public class GameController {
 											pos[X] = Math.abs(pos[X] - 5);
 										House house = player.getHouses()
 												.getFromHouse(pos[X]);
-										player.play(house);
+										game.play(house);
 										System.out.println("hit cell " + pos[X]
 												+ ":" + pos[Y]);
 									}
@@ -223,7 +223,10 @@ public class GameController {
 										playerEntry.getPlayerOneName());
 								players.get(1).setName(
 										playerEntry.getPlayerTwoName());
-								application.getGameBoard().switchTurn(players.indexOf(game.getTurn().getIs()));
+								application.getGameBoard()
+										.switchTurn(
+												players.indexOf(game.getTurn()
+														.getIs()));
 								application.showGameBoard();
 								application.refresh();
 							}
@@ -234,7 +237,7 @@ public class GameController {
 						new ActionListener() {
 
 							@Override
-							public void actionPerformed(ActionEvent arg0) {						
+							public void actionPerformed(ActionEvent arg0) {
 								boolean existingGames = false;
 								if (game.getHistory() != null) {
 									GameRecord record = game.getHistory()
@@ -270,7 +273,24 @@ public class GameController {
 							public void actionPerformed(ActionEvent arg0) {
 								application.showGameBoard();
 							}
+						});				
+
+				application.getGameOver().getClose()
+						.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								application.showPlayerEntry();
+							}
 						});
+				
+				application.getGameOver().getPlayAgain()
+				.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						application.showGameBoard();
+					}
+				});
+				
 				application.setVisible(true);
 
 			}
