@@ -6,9 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Dimension;
+import java.awt.Image;
+
 import javax.swing.JButton;
 
 public class GameBoard extends JPanel {
@@ -31,7 +34,13 @@ public class GameBoard extends JPanel {
 	private JLabel rightStore;
 	private JLabel playerNameOne;
 	private JLabel playerNameTwo;
-
+	private JLabel turnPlayerOne;
+	private JLabel turnPlayerTwo;
+	private static Color turnOn = Color.GREEN;
+	private static Color turnOff = Color.RED;
+	private static String turnOnText = "Go";
+	private static String turnOffText = "Wait";
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -53,15 +62,53 @@ public class GameBoard extends JPanel {
 		this.setLayout(new GridBagLayout());
 		this.initializeHouseButtons();
 		this.initializeStores();
+		this.initializePlayerNames();
+		this.initializeTurnLights();
+	}
+
+	public void switchTurn(int player) {
+		//it can be optimized
+		if (player == 0) {
+			turnPlayerOne.setForeground(turnOn);
+			turnPlayerOne.setText(turnOnText);
+			turnPlayerTwo.setForeground(turnOff);
+			turnPlayerTwo.setText(turnOffText);
+		} else if (player == 1) {
+			turnPlayerOne.setForeground(turnOff);
+			turnPlayerOne.setText(turnOffText);
+			turnPlayerTwo.setForeground(turnOn);
+			turnPlayerTwo.setText(turnOnText);			
+		}
+	}
+
+	private void initializeTurnLights() {
+		
+		turnPlayerOne = new JLabel("");
+		turnPlayerTwo = new JLabel("");
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 1;
+		this.add(turnPlayerOne,c);
+		c.gridy=0;
+		c.gridx=9;
+		this.add(turnPlayerTwo,c);
 	}
 
 	private void initializePlayerNames() {
-
+		playerNameOne = new JLabel("");
+		playerNameTwo = new JLabel("");
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;		
+		this.add(playerNameOne,c);
+		c.gridy = 1;
+		c.gridx=9;
+		this.add(playerNameTwo,c);		
 	}
 
 	private void initializeStores() {
 		GridBagConstraints c = new GridBagConstraints();
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 0;
 		c.gridheight = 2;
 
@@ -72,7 +119,7 @@ public class GameBoard extends JPanel {
 		this.leftStore.setName("resultLabel");
 		this.add(leftStore, c);
 
-		c.gridx = 7;
+		c.gridx = 8;
 		this.rightStore = new JLabel();
 		this.rightStore.setText("0");
 		this.rightStore.setPreferredSize(new Dimension(STORE_WIDTH,
@@ -84,7 +131,7 @@ public class GameBoard extends JPanel {
 
 	private void initializeHouseButtons() {
 
-		final int baseX = 1;
+		final int baseX = 2;
 		final int baseY = 0;
 
 		for (int x = 0; x < BOARD_HOUSE_WIDTH; x++) {
@@ -132,6 +179,14 @@ public class GameBoard extends JPanel {
 		house.setText(value);
 	}
 
+	public void setPlayerName(int player, String name)
+	{
+		if (player == 0)
+			playerNameOne.setText(name);
+		else if (player == 1)
+			playerNameTwo.setText(name);
+	}
+	
 	private JButton createHouseButton() {
 
 		JButton houseButton = new JButton();

@@ -10,10 +10,10 @@ import ee.ut.mancala.History;
 
 public class ShowHistory extends JPanel {
 
-	private static int CLOSE_BUTTON_HEIGHT = 0;
-	private static int CLOSE_BUTTON_WIDTH = 0;
-	private static int TEXTBOX_HEIGHT = 0;
-	private static int TEXTBOX_WIDTH = 0;
+	private static int CLOSE_BUTTON_HEIGHT = 75;
+	private static int CLOSE_BUTTON_WIDTH = 75;
+	private static int TEXTBOX_HEIGHT = 100;
+	private static int TEXTBOX_WIDTH = 100;
 	private static String EMPTY = "";
 	private static String ENTER = "\n";
 	private static String GAME = "Game";
