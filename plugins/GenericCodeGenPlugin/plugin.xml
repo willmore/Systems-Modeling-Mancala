@@ -1,0 +1,34 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE Plugin SYSTEM "http://www.upb.de/cs/fujaba/DTDs/Plugin.dtd">
+
+<Plugin pluginClass="de.uni_paderborn.fujaba.codegen.generic.GenericCodeGenPlugin">
+  <Name>Generic Java Code Generation Plugin</Name>
+  
+  <Version major="1" minor="0" build="0"/>
+  
+  <PluginLib>genericJavaCodeGen.jar</PluginLib>
+  
+  <Source>http://www.uni-paderborn.de/cs/fujaba/downloads/plugins/GenericCodeGenPlugin/1_0/GenericCodeGenPlugin.zip</Source>
+  
+  <Kernel major="4" minor="0" revision="1"/>
+  
+  <Description>
+    <ShortDescription>Java Code Generation Plugin, that changes the code generation to generate type-safe code for associations.</ShortDescription>
+    
+    <DetailedDescription>
+      This plugin changes the code generation for UML associations.
+      It uses a library with special classes implemented using Java Generics.
+      The library contains for each kind of role that can be used in an association a role class with associations methods specially implemented for the kind of role.
+      
+      To make the generated code type-safe these classes are specialized during the code generation.
+      For each association in the UML model a special role class is generated that implements the association.
+      
+      Each class in the UML model gets only a getter method for each of its roles instead of all the associations methods.
+      This way the associations implementation within the modelled classes becomes very short and easier to use.
+    </DetailedDescription>
+    
+    <Vendor>University of Paderborn</Vendor>
+    
+    <Contact>mailto:travkin@upb.de</Contact>
+  </Description>
+</Plugin>
