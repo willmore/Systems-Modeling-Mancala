@@ -33,6 +33,7 @@ public class MainGui {
 	private PlayerEntry playerEntry = null;
 	private ShowHistory showHistory = null;
 	private GameBoard gameBoard;
+	private GameOver gameOver;
 	
 	public MainGui() {
 		this.gameBoard = new GameBoard();
@@ -41,13 +42,21 @@ public class MainGui {
 		this.showHistory.setName("History");
 		this.playerEntry = new PlayerEntry();
 		this.playerEntry.setName("PlayerEntry");
+		this.gameOver = new GameOver();
+		this.gameOver.setName("GameOver");
 		this.getJContentPane().add(playerEntry,playerEntry.getName());
 		this.getJContentPane().add(showHistory,showHistory.getName());
 		this.getJContentPane().add(gameBoard,gameBoard.getName());
+		this.getJContentPane().add(gameOver,gameOver.getName());
 		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
 		c.show(this.getJContentPane(),playerEntry.getName());
 	}
 
+	public GameOver getGameOver()
+	{
+		return this.gameOver;
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -257,6 +266,12 @@ public class MainGui {
 		//getJContentPane().add(gameBoard);
 		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
 		c.show(this.getJContentPane(), gameBoard.getName());
+	}
+	
+	public void showGameOver() {
+		//getJContentPane().add(gameBoard);
+		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		c.show(this.getJContentPane(), gameOver.getName());
 	}
 	
 	public void showPlayerEntry() {

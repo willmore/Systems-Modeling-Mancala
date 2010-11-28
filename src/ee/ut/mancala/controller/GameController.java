@@ -15,7 +15,9 @@ import ee.ut.mancala.Houses;
 import ee.ut.mancala.Player;
 import ee.ut.mancala.Score;
 import ee.ut.mancala.SeedContainer;
+import ee.ut.mancala.Status;
 import ee.ut.mancala.Store;
+import ee.ut.mancala.Turn;
 import ee.ut.mancala.view.MainGui;
 import ee.ut.mancala.view.PlayerEntry;
 import ee.ut.mancala.view.ShowHistory;
@@ -24,15 +26,51 @@ public class GameController {
 
 	private static int X = 0;
 	private static int Y = 1;
-	
-	
+
 	public void start() {
-				
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				final MainGui application = new MainGui();
-				final Game game = new Game("","");
+				final Game game = new Game("", "");
+
+				game.getTurn().addPropertyChangeListener(Turn.PROPERTY_IS,
+						new PropertyChangeListener() {
+
+							@Override
+							public void propertyChange(PropertyChangeEvent arg0) {
+								Turn turn = (Turn) arg0.getSource();
+								Player player = turn.getIs();
+								ArrayList<Player> players = new ArrayList<Player>(
+										game.getPlayer());
+								int y = players.indexOf(player);
+								application.getGameBoard().switchTurn(y);
+							}
+						});
+
+				// wiring game status
+				game.addPropertyChangeListener(Game.PROPERTY_STATUS,
+						new PropertyChangeListener() {
+
+							@Override
+							public void propertyChange(PropertyChangeEvent arg0) {
+								if (arg0.getNewValue().equals(Status.GAME_OVER)) {
+									GameRecord mostRecent = game.getHistory()
+											.getMostRecent();
+									for (Score score : mostRecent.getScore()) {
+										Player player = score.getPlayer();
+										application.getGameOver().addText(
+												player.getName() + " got "
+														+ score.getPoints());
+									}
+									application.showGameOver();
+								} else if (arg0.getNewValue().equals(
+										Status.PLAYING)) {
+									application.showGameBoard();
+								}
+							}
+						});
+
 				// Adding listeners to the buttons
 				for (int x = 0; x < application.getGameBoard().getBoardWidth(); x++) {
 					for (int y = 0; y < application.getGameBoard()
@@ -47,8 +85,8 @@ public class GameController {
 										int[] pos = application.getGameBoard()
 												.getHousePosition(
 														arg0.getSource());
-										Player player = (Player) game.getPlayer()
-												.toArray()[pos[Y]];
+										Player player = (Player) game
+												.getPlayer().toArray()[pos[Y]];
 										if (pos[Y] == 0)
 											pos[X] = Math.abs(pos[X] - 5);
 										House house = player.getHouses()
@@ -62,7 +100,7 @@ public class GameController {
 				}
 
 				// initializing model
-				
+
 				// TODO this is a hardcoded game initialization, must implement
 				// as story.
 				/*
@@ -84,6 +122,22 @@ public class GameController {
 					System.out.println("New player "
 							+ p.getHouses().getHouse().size());
 					int x = 0;
+
+					// wire player
+					p.addPropertyChangeListener(Player.PROPERTY_NAME,
+							new PropertyChangeListener() {
+
+								@Override
+								public void propertyChange(
+										PropertyChangeEvent arg0) {
+									Player player = (Player) arg0.getSource();
+									ArrayList<Player> players = new ArrayList<Player>(
+											game.getPlayer());
+									int y = players.indexOf(player);
+									application.getGameBoard().setPlayerName(y,
+											(String) arg0.getNewValue());
+								}
+							});
 
 					// wire store
 					Store store = p.getOwns();
@@ -186,8 +240,6 @@ public class GameController {
 					y++;
 				}
 
-				// wire Stores
-
 				// Wire start game button
 				application.getPlayerEntry().getSubmitButton()
 						.addActionListener(new ActionListener() {
@@ -204,6 +256,7 @@ public class GameController {
 										playerEntry.getPlayerOneName());
 								players.get(1).setName(
 										playerEntry.getPlayerTwoName());
+								application.getGameBoard().switchTurn(players.indexOf(game.getTurn().getIs()));
 								application.showGameBoard();
 								application.refresh();
 							}
@@ -219,8 +272,8 @@ public class GameController {
 								// hide previous one
 								boolean existingGames = false;
 								if (game.getHistory() != null) {
-									GameRecord record = game
-											.getHistory().getMostRecent();
+									GameRecord record = game.getHistory()
+											.getMostRecent();
 									if (record != null) {
 										ShowHistory showHistory = application
 												.getShowHistory();
@@ -245,6 +298,7 @@ public class GameController {
 							}
 						});
 
+				// wire close button in Show History
 				application.getShowHistory().getCloseButton()
 						.addActionListener(new ActionListener() {
 
@@ -256,9 +310,10 @@ public class GameController {
 								application.showGameBoard();
 							}
 						});
-
 				application.setVisible(true);
+
 			}
+
 		});
 	}
 
