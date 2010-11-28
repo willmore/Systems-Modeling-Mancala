@@ -100,7 +100,7 @@ public class GameController {
 											pos[X] = Math.abs(pos[X] - 5);
 										House house = player.getHouses()
 												.getFromHouse(pos[X]);
-										player.play(house);
+										game.play(house);
 										System.out.println("hit cell " + pos[X]
 												+ ":" + pos[Y]);
 									}
