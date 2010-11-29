@@ -1,6 +1,8 @@
 package ee.ut.mancala.view;
 
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -31,19 +33,24 @@ public class ShowHistory extends JPanel {
 	}
 
 	/**
-	 * initialize the controls and this. Do not call directly
+	 * initialize the controls and this.
 	 */
 	private void initialize() {
 		this.setSize(400, 400);
 		this.setLayout(new GridBagLayout());
 		close = new JButton("Close");
 		scoresArea = new JTextArea();
-		this.add(scoresArea);
-		this.add(close);
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(scoresArea,c);
+		c.gridy = 1;
+		this.add(close,c);
 	}
 
 	/**
 	 * Returns the close button
+	 * 
 	 * @return
 	 */
 	public JButton getCloseButton() {
@@ -56,20 +63,23 @@ public class ShowHistory extends JPanel {
 	public void addRecord() {
 		if (scoresArea.getText().compareTo(EMPTY) != 0)
 			scoresArea.setText(ENTER);
-		scoresArea.setText(ENTER + GAME + ENTER);
+	
+		scoresArea.append(ENTER + GAME + ENTER);
 	}
 
 	/**
-	 * Adds the number of seeds that one player collected at the end of a given game
+	 * Adds the number of seeds that one player collected at the end of a given
+	 * game
+	 * 
 	 * @param player
 	 * @param points
 	 */
 	public void addScore(String player, int points) {
-		scoresArea.setText(player + "got " + String.valueOf(points)+"     ");
+		scoresArea.append(player + " got " + String.valueOf(points) + "  ");
 	}
 
 	/**
-	 * Clears the text in the display 
+	 * Clears the text in the display
 	 */
 	public void clearRecords() {
 		scoresArea.setText(EMPTY);

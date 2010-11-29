@@ -66,12 +66,20 @@ public class GameController {
 								if (arg0.getNewValue().equals(Status.GAME_OVER)) {
 									GameRecord mostRecent = game.getHistory()
 											.getMostRecent();
+									String winner="";
+									int points=0;
 									for (Score score : mostRecent.getScore()) {
 										Player player = score.getPlayer();
+										if (points<score.getPoints())
+										{
+											points = score.getPoints();
+											winner = player.getName();
+										}
 										application.getGameOver().addText(
 												player.getName() + " got "
 														+ score.getPoints());
 									}
+									application.getGameOver().addText(" Winner = "+winner);
 									application.showGameOver();
 								} else if (arg0.getNewValue().equals(
 										Status.PLAYING)) {
@@ -271,7 +279,10 @@ public class GameController {
 						.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent arg0) {
-								application.showGameBoard();
+								if (game.getStatus().equals(Status.PLAYING))
+									application.showGameBoard();
+								else
+									application.showPlayerEntry();								
 							}
 						});				
 
@@ -287,7 +298,8 @@ public class GameController {
 				.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						application.showGameBoard();
+						game.startNewGame();
+//						application.showGameBoard();
 					}
 				});
 				
@@ -297,5 +309,4 @@ public class GameController {
 
 		});
 	}
-
 }
