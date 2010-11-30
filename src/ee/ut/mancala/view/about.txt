@@ -1,0 +1,12 @@
+Mancala
+Version 1.0
+
+This game is created for purpose of course “Systems Modeling, MTAT.03.083” 
+at University of Tartu, as course project. 
+
+Produced used Java, Fujaba and Swing.
+
+Acknowledgments: Authors would like to thank course teacher 
+Ulrich Norbisrath and Artjom Lind - teaching assistant. 
+
+© 2010 by Chris Willmore, Carlos Paniagua and Radomir Sebek

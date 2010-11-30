@@ -274,6 +274,7 @@ public class GameController {
 							}
 						});
 
+				
 				// wire close button in show history
 				application.getShowHistory().getCloseButton()
 						.addActionListener(new ActionListener() {

@@ -14,7 +14,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JFrame;
 import javax.swing.JDialog;
+import javax.swing.JTextArea;
+
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MainGui {
 
@@ -27,36 +33,39 @@ public class MainGui {
 	private JMenuItem exitMenuItem = null;
 	private JMenuItem aboutMenuItem = null;
 	private JMenuItem showHistoryMenuItem = null;
+	private JMenuItem howToPlayMenuItem = null;
 	private JDialog aboutDialog = null;
+	private JDialog howToPlay = null;
 	private JPanel aboutContentPane = null;
-	private JLabel aboutVersionLabel = null;
+	private JPanel howToPlayContentPane = null;
+	private JTextArea aboutVersionLabel = null;
+	private JTextArea howToPlayTextArea = null;
 	private PlayerEntry playerEntry = null;
 	private ShowHistory showHistory = null;
-	private GameBoard gameBoard;
-	private GameOver gameOver;
-	
+	private GameBoard gameBoard = null;
+	private GameOver gameOver = null;
+
 	public MainGui() {
 		this.gameBoard = new GameBoard();
 		this.gameBoard.setName("GameBoard");
-		this.showHistory= new ShowHistory();
+		this.showHistory = new ShowHistory();
 		this.showHistory.setName("History");
 		this.playerEntry = new PlayerEntry();
 		this.playerEntry.setName("PlayerEntry");
 		this.gameOver = new GameOver();
 		this.gameOver.setName("GameOver");
-		this.getJContentPane().add(playerEntry,playerEntry.getName());
-		this.getJContentPane().add(showHistory,showHistory.getName());
-		this.getJContentPane().add(gameBoard,gameBoard.getName());
-		this.getJContentPane().add(gameOver,gameOver.getName());
-		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
-		c.show(this.getJContentPane(),playerEntry.getName());
+		this.getJContentPane().add(playerEntry, playerEntry.getName());
+		this.getJContentPane().add(showHistory, showHistory.getName());
+		this.getJContentPane().add(gameBoard, gameBoard.getName());
+		this.getJContentPane().add(gameOver, gameOver.getName());
+		CardLayout c = (CardLayout) this.getJContentPane().getLayout();
+		c.show(this.getJContentPane(), playerEntry.getName());
 	}
 
-	public GameOver getGameOver()
-	{
+	public GameOver getGameOver() {
 		return this.gameOver;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -98,7 +107,7 @@ public class MainGui {
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
 			jContentPane = new JPanel();
-			//jContentPane.setLayout(new BorderLayout());
+			// jContentPane.setLayout(new BorderLayout());
 			jContentPane.setLayout(new CardLayout());
 			jContentPane.setPreferredSize(new Dimension(25, 25));
 		}
@@ -143,6 +152,7 @@ public class MainGui {
 		if (helpMenu == null) {
 			helpMenu = new JMenu();
 			helpMenu.setText("Help");
+			helpMenu.add(getHowToPlayMenuItem());
 			helpMenu.add(getAboutMenuItem());
 		}
 		return helpMenu;
@@ -177,6 +187,25 @@ public class MainGui {
 			});
 		}
 		return exitMenuItem;
+	}
+
+	public JMenuItem getHowToPlayMenuItem() {
+		if (howToPlayMenuItem == null) {
+			howToPlayMenuItem = new JMenuItem();
+			howToPlayMenuItem.setText("How To Play");
+			howToPlayMenuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JDialog  howToPlay= getHowToPlayDialog();
+					howToPlay.pack();
+					Point loc = getJFrame().getLocation();
+					loc.translate(20, 20);
+					howToPlay.setLocation(loc);
+					howToPlay.setVisible(true);
+				}
+			});
+		}
+
+		return howToPlayMenuItem;
 	}
 
 	/**
@@ -224,6 +253,26 @@ public class MainGui {
 		return aboutDialog;
 	}
 
+	
+	private JDialog getHowToPlayDialog() {
+		if (howToPlay == null) {
+			howToPlay = new JDialog(getJFrame(), true);
+			howToPlay.setTitle("How To Play");
+			howToPlay.setContentPane(getHowToPlayContentPane());
+		}
+		return howToPlay;
+	}
+	
+	
+	private JPanel getHowToPlayContentPane() {
+		if (howToPlayContentPane == null) {
+			howToPlayContentPane = new JPanel();
+			howToPlayContentPane.setLayout(new BorderLayout());
+			howToPlayContentPane.add(getHowToPlayTextArea(), BorderLayout.CENTER);
+		}
+		return howToPlayContentPane;
+	}
+	
 	/**
 	 * This method initializes aboutContentPane
 	 * 
@@ -238,16 +287,72 @@ public class MainGui {
 		return aboutContentPane;
 	}
 
+	public String getAboutText() {
+		String ret = "";
+		try {
+			// Open the file that is the first
+			// command line parameter
+			InputStream s = this.getClass().getResourceAsStream("about.txt");
+			// Get the object of DataInputStream
+			DataInputStream in = new DataInputStream(s);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+			// Read File Line By Line
+			while ((strLine = br.readLine()) != null) {
+				// Print the content on the console
+				ret+="\n"+strLine;
+			}
+			// Close the input stream
+			in.close();
+		} catch (Exception e) {// Catch exception if any
+			System.err.println("Error: " + e.getMessage());
+		}
+		return ret;
+	}
+
+
+	public String getHowToPlayText() {
+		String ret = "";
+		try {
+			// Open the file that is the first
+			// command line parameter
+			InputStream s = this.getClass().getResourceAsStream("HowToPlayInstructions.txt");
+			// Get the object of DataInputStream
+			DataInputStream in = new DataInputStream(s);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+			// Read File Line By Line
+			while ((strLine = br.readLine()) != null) {
+				// Print the content on the console
+				ret+="\n"+strLine;
+			}
+			// Close the input stream
+			in.close();
+		} catch (Exception e) {// Catch exception if any
+			System.err.println("Error: " + e.getMessage());
+		}
+		return ret;
+	}
+
+	private JTextArea getHowToPlayTextArea() {
+		if (howToPlayTextArea == null) {
+			howToPlayTextArea = new JTextArea();
+			howToPlayTextArea.setText(getHowToPlayText());
+			//aboutVersionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return howToPlayTextArea;
+	}
+	
 	/**
 	 * This method initializes aboutVersionLabel
 	 * 
 	 * @return javax.swing.JLabel
 	 */
-	private JLabel getAboutVersionLabel() {
+	private JTextArea getAboutVersionLabel() {
 		if (aboutVersionLabel == null) {
-			aboutVersionLabel = new JLabel();
-			aboutVersionLabel.setText("Version 1.0");
-			aboutVersionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			aboutVersionLabel = new JTextArea();
+			aboutVersionLabel.setText(getAboutText());
+			//aboutVersionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return aboutVersionLabel;
 	}
@@ -257,34 +362,35 @@ public class MainGui {
 	}
 
 	public void hidePlayerEntry() {
-		//getJContentPane().remove(playerEntry);
-		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
-		
+		// getJContentPane().remove(playerEntry);
+		CardLayout c = (CardLayout) this.getJContentPane().getLayout();
+
 	}
-	
+
 	public void showGameBoard() {
-		//getJContentPane().add(gameBoard);
-		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		// getJContentPane().add(gameBoard);
+		CardLayout c = (CardLayout) this.getJContentPane().getLayout();
 		c.show(this.getJContentPane(), gameBoard.getName());
 	}
-	
+
 	public void showGameOver() {
-		//getJContentPane().add(gameBoard);
-		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		// getJContentPane().add(gameBoard);
+		CardLayout c = (CardLayout) this.getJContentPane().getLayout();
 		c.show(this.getJContentPane(), gameOver.getName());
 	}
-	
+
 	public void showPlayerEntry() {
-		//getJContentPane().add(gameBoard);
-		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
+		// getJContentPane().add(gameBoard);
+		CardLayout c = (CardLayout) this.getJContentPane().getLayout();
 		c.show(this.getJContentPane(), playerEntry.getName());
 	}
 
 	public void showHistory() {
-		//getJContentPane().add(showHistory);
-		CardLayout c = (CardLayout)this.getJContentPane().getLayout();
-		c.show(this.getJContentPane(),showHistory.getName());
+		// getJContentPane().add(showHistory);
+		CardLayout c = (CardLayout) this.getJContentPane().getLayout();
+		c.show(this.getJContentPane(), showHistory.getName());
 	}
+
 
 	public void hideHistory() {
 		getJContentPane().remove(showHistory);
