@@ -1,1 +1,17 @@
 Mancala Project
+
+Dear reader,
+
+
+Once u open this file, means u have accessed to our repository. Please refer to fallowing:
+
+
+1. Systems-Modeling-Mancala/Manual.pdf 	             For User manual, 30 user stories, scenarios, 
+                                                     artifacts inventory, configuring the class path, 
+                                                     generating the code and running tests and application itself
+
+2. Systems-Modeling-Mancala/object_diagrams/         For object diagrams
+
+3 . Systems-Modeling-Mancala/ project report.pdf 	 For Project report
+
+4. Systems-Modeling-Mancala/mancala.ctr 		     For Class diagram and 15 test cases
