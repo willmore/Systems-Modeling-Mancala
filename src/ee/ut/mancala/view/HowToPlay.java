@@ -1,5 +1,7 @@
 package ee.ut.mancala.view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -7,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import javax.swing.JButton;
@@ -30,10 +33,9 @@ public class HowToPlay extends JPanel {
 		try {
 			// Open the file that is the first
 			// command line parameter
-			FileInputStream fstream = new FileInputStream(
-					"HowToPlayInstructions.txt");
+			InputStream s = this.getClass().getResourceAsStream("HowToPlayInstructions.txt");
 			// Get the object of DataInputStream
-			DataInputStream in = new DataInputStream(fstream);
+			DataInputStream in = new DataInputStream(s);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String strLine;
 			// Read File Line By Line
@@ -52,10 +54,20 @@ public class HowToPlay extends JPanel {
 	 * initialize the controls 
 	 */
 	public void initialize() {
+		this.setSize(600, 600);
+		this.setLayout(new GridBagLayout());
 		close = new JButton("Close");
-		display = new JTextArea();
-		this.add(close);
+		display = new JTextArea();		
+		setText();
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
 		this.add(display);
+		c.gridy=1;
+		this.add(close);
 	}
-
+	
+	public JButton getCloseButton()	{
+		return close;
+	}
 }
